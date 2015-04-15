@@ -18,7 +18,7 @@ class InvitationsController < ApplicationController
     redirect_to @invitation
     id = @invitation.recipient_id.to_s
     channel = "private-conversation." + id
-    Pusher.trigger(channel, 'game_request', {:from => id })
+    Pusher.trigger(channel, 'game_request', {:from => current_user.id })
 
   end
 

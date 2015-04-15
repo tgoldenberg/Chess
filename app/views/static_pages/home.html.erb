@@ -16,3 +16,18 @@
     </div>
   </div>
 </div>
+
+<script>
+$(function() {
+  var pusher = new Pusher('42b5fd3755f8e9edc491');
+  var channelName = 'private-conversation.' + "<%= current_user ? current_user.id.to_s : 'null' %>";
+  var channel = pusher.subscribe(channelName);
+
+  channel.bind('game_request', function(data) {
+    console.log(data.from);
+    $('#inner-product-modal').html("<%= escape_javascript(render 'new_room') %>");
+    $('#product-modal').modal("show");
+  })
+})
+
+</script>
