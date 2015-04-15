@@ -10,6 +10,12 @@ class InvitationsController < ApplicationController
 
   def new
     @invitation = Invitation.new
+    @invitation.sender_id = params[:sender_id]
+    @invitation.recipient_id = params[:recipient_id]
+    if @invitation.save
+      redirect_to root_path
+    end
+
   end
 
   def create
