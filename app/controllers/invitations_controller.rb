@@ -1,5 +1,7 @@
 class InvitationsController < ApplicationController
+
   before_action :set_invitation, only: [:show, :edit, :update, :destroy]
+  respond_to :html, :js
 
   def index
     @invitations = Invitation.all
@@ -12,9 +14,11 @@ class InvitationsController < ApplicationController
     @invitation = Invitation.new
     @invitation.sender_id = params[:sender_id]
     @invitation.recipient_id = params[:recipient_id]
-    if @invitation.save
-      redirect_to root_path
-    end
+    @invitation.save
+    redirect_to @invitation
+    id = @invitation.recipient_id.to_s
+    channel = "private-conversation." + id
+    Pusher.trigger(channel, 'game_request', {:from => id })
 
   end
 

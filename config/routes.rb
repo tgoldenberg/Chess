@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     end
   end
 
+  post '/pusher/auth' => 'pusher#auth'
   root 'static_pages#home'
 
 end
