@@ -15,6 +15,9 @@ class RoomsController < ApplicationController
     @room.player2_id = @invitation.sender_id
     @room.save
     redirect_to @room
+    id = @room.player2_id.to_s
+    channel = 'private-conversation.' + id
+    Pusher.trigger(channel, 'game_acceptance', {:room => @room.id })
   end
 
 

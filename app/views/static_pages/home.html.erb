@@ -30,6 +30,11 @@ $(function() {
     $('#product-modal').modal("show");
 
   });
+
+  channel.bind('game_acceptance', function(data) {
+    console.log(data.room);
+    window.location = '/rooms/' + data.room;
+  });
 });
 
 </script>
