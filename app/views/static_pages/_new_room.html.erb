@@ -5,7 +5,7 @@
     <p style="font-size: 16px;">You have been asked to join a game. Will you join?</p>
   </div>
 
-  <th><%= link_to 'Accept', new_room_path, class: 'btn btn-success btn-lg new-room' %></th>
+  <li class="btn btn-success btn-lg new-room"> <%= link_to "Accept", new_room_path %></li>
   <th><%= link_to 'No thanks', "#", class: 'btn btn-default btn-lg cancel' %></th>
   <br />
   <br /><br /><br /><br /><br />
@@ -16,5 +16,7 @@ $('.cancel').click(function(){
   $('#product-modal').modal("hide");
   return false;
 });
+
+
 
 </script>

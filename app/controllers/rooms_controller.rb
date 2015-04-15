@@ -11,6 +11,8 @@ class RoomsController < ApplicationController
   def new
     @room = Room.new
     @room.player1_id = current_user.id
+    @invitation = Invitation.where(current_user.id == :recipient_id).order("created_at DESC").first
+    @room.player2_id = @invitation.sender_id
     @room.save
     redirect_to @room
   end
