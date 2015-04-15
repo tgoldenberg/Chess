@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Player1:</strong>
+  <%= @room.player1_id %>
+</p>
+
+<p>
+  <strong>Player2:</strong>
+  <%= @room.player2_id %>
+</p>
+
+<p>
+  <strong>Invitation:</strong>
+  <%= @room.invitation %>
+</p>
+
+<%= link_to 'Edit', edit_room_path(@room) %> |
+<%= link_to 'Back', rooms_path %>
