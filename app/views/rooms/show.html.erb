@@ -1,16 +1,92 @@
-<script src="/assets/chess.js"></script>
 
-<h1>StaticPages#home</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
-<div class="container">
-  <div id="board" style="width: 400px"></div>
-  <p>Status: <span id="status"></span></p>
-  <p>FEN: <span id="fen"></span></p>
-  <p>PGN: <span id="pgn"></span></p>
+<div class="col-md-9">
+  <div class="chess-holder">
+    <div class="col-sm-2 timer-holder clock" style="font-size: 20px;">
+      <div class="button-holder">
+    <span class="glyphicon glyphicon-hourglass button-glyphs"></span>  <p>Player <b>1</b></p><span class="glyphicon glyphicon-minus button-glyphs"></span>
+      </div>
+        <div class="time-box">
+          <div id="time0" class="time-digits"></div>
+        </div>
+        <div class="space-keeper">
+          <p class="line-break"></p>
+          <div class="player-info">
+            <div class="user-header">
+               <p><span class="glyphicon glyphicon-user button-glyphs"></span>ryanG360</p><br><br>
+            </div>
+            <p>Brooklyn, NY</p><br>
+            <p>Ranking: 2400</p><br>
+            <p>User Rank:
+              <span class="glyphicon glyphicon-star"></span>
+              <span class="glyphicon glyphicon-star"></span>
+              <span class="glyphicon glyphicon-star"></span>
+
+            </p>
+          </div>
+        </div>
+        <div class="button-holder second-button-holder">
+        <span class="glyphicon glyphicon-hourglass button-glyphs"></span><p>Player <b>2</b></p><span class="glyphicon glyphicon-minus button-glyphs"></span>
+        </div>
+        <div class="time-box">
+          <div id="time1" class="time-digits"></div>
+        </div>
+        <div class="space-keeper">
+          <p class="line-break"></p>
+          <div class="player-info">
+            <div class="user-header">
+               <p><span class="glyphicon glyphicon-user button-glyphs"></span>tGold108</p><br><br>
+            </div>
+            <p>Long Beach, NY</p><br>
+            <p>Ranking: 1200</p><br>
+            <p>User Rank
+              <span class="glyphicon glyphicon-star"></span>
+              <span class="glyphicon glyphicon-star"></span>
+              <span class="glyphicon glyphicon-star"></span>
+              <span class="glyphicon glyphicon-star"></span>
+            </p>
+          </div>
+        </div>
+    </div>
+    <div class="col-sm-8" id="board" style="width: 537px"></div>
+    <!-- <p>Status: <span id="status"></span></p>
+    <p>FEN: <span id="fen"></span></p>
+    <p>PGN: <span id="pgn"></span></p> -->
+    <div class="col-sm-2 captured-pieces">
+      <div class="white-pieces">
+        <div class="button-holder">
+          <span class="glyphicon glyphicon-ok-circle button-glyphs"></span><p>Captured Black</p>
+        </div>
+      </div>
+      <div class="space-bottom"></div>
+      <div class="black-pieces">
+        <div class="button-holder">
+        <span class="glyphicon glyphicon-ok-circle button-glyphs"></span><p>Captured White</p>
+        </div>
+      </div>
+      <div class="space-bottom"></div>
+    </div>
+  </div>
 </div>
 
+<div class="sidebar-nav col-md-3">
+  <div class="table-holder container-sm">
+  <table class="table text-holder">
+    <tbody class="text-list">
+    </tbody>
+  </table>
+  </div>
+  <div class="buttons">
+    <button class="btn"><span class="glyphicon glyphicon-hand-right button-glyphs"></span><li> <%= link_to 'DRAW', "#", style: 'text-decoration: none; color: white;' %></li></button>
+    <td></td>
+    <button class="btn"><span class="glyphicon glyphicon-flag button-glyphs"></span><li> <%= link_to 'QUIT', "#", style: 'text-decoration: none; color: white;' %></li></button>
+  </div>
+</div>
+
+<div class="bottom-row"></div>
+<div class="popup-chatbox"><p>OPEN CHAT</p><span class="glyphicon glyphicon-plus button-glyphs"></span></div>
 
 
+<script src="/assets/chess.js"></script>
 <script>
 var board,
   game = new Chess(),
