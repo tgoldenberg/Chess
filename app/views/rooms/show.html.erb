@@ -132,7 +132,9 @@ var onDrop = function(source, target) {
   // illegal move
   if (move === null) return 'snapback';
 
-  updateStatus();
+
+
+  updateStatus(source, target);
 };
 
 // update the board position after the piece snap
@@ -141,7 +143,7 @@ var onSnapEnd = function() {
   board.position(game.fen());
 };
 
-var updateStatus = function() {
+var updateStatus = function(source, target) {
   var status = '';
 
   var moveColor = 'White';
@@ -172,8 +174,8 @@ var updateStatus = function() {
   statusEl.html(status);
   fenEl.html(game.fen());
   pgnEl.html(game.pgn());
+  $('#move-notation').val(source + '-' + target);
   $('#move-piece').val(game.fen());
-  $('#move-notation').val(game.pgn());
   $('#move-user').val('<%= current_user.id %>')
   $('#move-submit').submit();
 };
@@ -201,8 +203,15 @@ $(function() {
   var channel = pusher.subscribe(channelName);
 
   channel.bind('new_move', function(data) {
-    board.position(data.fen);
-  })
+    console.log(data.fen);
+    console.log(data.object_notation);
+    console.log(game.turn());
+
+
+    onDrop(data.object_notation.split('-')[0], data.object_notation.split('-')[1]);
+    board.move(data.object_notation);
+
+  });
 })
 
 </script>
