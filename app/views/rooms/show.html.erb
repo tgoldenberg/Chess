@@ -180,9 +180,10 @@ var updateStatus = function() {
 
 var cfg = {
   draggable: true,
+  showNotation: false,
   position: 'start',
-  snapSpeed: 500,
-  snapbackSpeed: 500,
+  snapSpeed: 100,
+  snapbackSpeed: 400,
   moveSpeed: 'slow',
   pieceTheme: "/assets/{piece}.png",
   onDragStart: onDragStart,
@@ -192,4 +193,16 @@ var cfg = {
 board = new ChessBoard('board', cfg);
 
 updateStatus();
+</script>
+<script>
+$(function() {
+  var pusher = new Pusher('42b5fd3755f8e9edc491');
+  var channelName = 'private-conversation.' + "<%= current_user ? current_user.id.to_s : 'null' %>";
+  var channel = pusher.subscribe(channelName);
+
+  channel.bind('new_move', function(data) {
+    board.position(data.fen);
+  })
+})
+
 </script>

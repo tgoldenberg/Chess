@@ -22,6 +22,13 @@ class MovesController < ApplicationController
     @move.user_id = current_user.id
     @move.save
     redirect_to room_move_path(@room, @move)
+    if @room.player1_id == current_user.id
+      id = @room.player2_id.to_s
+    elsif @room.player2_id == current_user.id
+      id = @room.player1_id.to_s
+    end
+    channel = 'private-conversation.' + id
+    Pusher.trigger(channel, 'new_move', {user: @move.user_id, room: @move.room_id, fen: @move.piece, object_notation: @move.notation})
   end
 
   private
