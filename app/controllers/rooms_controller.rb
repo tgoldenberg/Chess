@@ -6,6 +6,8 @@ class RoomsController < ApplicationController
   end
 
   def show
+    @room = Room.find(params[:id])
+    @move = Move.new(:room => @room)
   end
 
   def new

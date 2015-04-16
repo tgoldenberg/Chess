@@ -85,6 +85,23 @@
 <div class="bottom-row"></div>
 <div class="popup-chatbox"><p>OPEN CHAT</p><span class="glyphicon glyphicon-plus button-glyphs"></span></div>
 
+<%= form_for [@room, @move], remote: true do |f| %>
+  <div class="field">
+    <%= f.text_field :notation, id: 'move-notation' %>
+  </div>
+  <div class="field">
+    <%= f.text_field :room_id  %>
+  </div>
+  <div class="field">
+    <%= f.text_field :user_id, id: 'move-user' %>
+  </div>
+  <div class="field">
+    <%= f.text_field :piece, id: 'move-piece'  %>
+  </div>
+  <div class="actions">
+    <%= f.submit "", :id => 'move-submit' %>
+  </div>
+<% end %>
 
 <script src="/assets/chess.js"></script>
 <script>
@@ -155,6 +172,10 @@ var updateStatus = function() {
   statusEl.html(status);
   fenEl.html(game.fen());
   pgnEl.html(game.pgn());
+  $('#move-piece').val(game.fen());
+  $('#move-notation').val(game.pgn());
+  $('#move-user').val('<%= current_user.id %>')
+  $('#move-submit').submit();
 };
 
 var cfg = {
