@@ -1,4 +1,3 @@
-
 <div class="col-md-9">
   <div class="chess-holder">
     <div class="col-sm-2 timer-holder clock" style="font-size: 20px;">
@@ -116,7 +115,7 @@ var board,
 var onDragStart = function(source, piece, position, orientation) {
   if (game.game_over() === true ||
       (game.turn() === 'w' && "<%= current_user.id %>" === "<%= @room.player2_id %>") ||
-      (game.turn() === 'b' && "<%= current_user.id %>" === "<%= @room.player1_id %>") || 
+      (game.turn() === 'b' && "<%= current_user.id %>" === "<%= @room.player1_id %>") ||
       (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
       (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
     return false;
@@ -207,7 +206,7 @@ $(function() {
   console.log("<%= @room.player1_id %>")
   console.log("<%= @room.player2_id %>")
 
-  var pusher = new Pusher('42b5fd3755f8e9edc491');
+  var pusher = new Pusher('f74ddd7f3eae987007b6');
   var channelName = 'private-conversation.' + "<%= current_user ? current_user.id.to_s : 'null' %>";
   var channel = pusher.subscribe(channelName);
   console.log(channel);
