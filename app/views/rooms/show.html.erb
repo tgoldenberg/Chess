@@ -115,6 +115,8 @@ var board,
 // only pick up pieces for the side to move
 var onDragStart = function(source, piece, position, orientation) {
   if (game.game_over() === true ||
+      (game.turn() === 'w' && "<%= current_user.id %>" === "<%= @room.player2_id %>") ||
+      (game.turn() === 'b' && "<%= current_user.id %>" === "<%= @room.player1_id %>") || 
       (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
       (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
     return false;
@@ -201,20 +203,23 @@ $(function() {
   if ("<%= current_user.id %>" === "<%= @room.player2_id %>") {
     board.orientation('black');
   }
-
+  console.log("<%= current_user.id %>")
+  console.log("<%= @room.player1_id %>")
+  console.log("<%= @room.player2_id %>")
 
   var pusher = new Pusher('42b5fd3755f8e9edc491');
   var channelName = 'private-conversation.' + "<%= current_user ? current_user.id.to_s : 'null' %>";
   var channel = pusher.subscribe(channelName);
+  console.log(channel);
 
   channel.bind('new_move', function(data) {
     console.log(data.fen);
     console.log(data.object_notation);
     console.log(game.turn());
 
-
     onDrop(data.object_notation.split('-')[0], data.object_notation.split('-')[1]);
     board.move(data.object_notation);
+
 
   });
 })
