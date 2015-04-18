@@ -82,7 +82,18 @@
 </div>
 
 <div class="bottom-row"></div>
-<div class="popup-chatbox"><p>OPEN CHAT</p><span class="glyphicon glyphicon-plus button-glyphs"></span></div>
+<div class="popup-chatbox">
+  <div class="closed-box">
+    <p>OPEN CHAT</p>
+    <span class="glyphicon glyphicon-plus button-glyphs"></span>
+  </div>
+  <div class="open-box" style="display:none;">
+    <div class="popup-head">
+      <div class="popup-head-left"><p>OPPONENT</p></div>
+      <div class="popup-head-right"><span class="glyphicon glyphicon-minus button-glyphs"></span></div>
+    </div>
+  </div>
+</div>
 
 <%= form_for [@room, @move], remote: true do |f| %>
   <div class="field">
@@ -211,6 +222,19 @@ $(function() {
   console.log("<%= current_user.id %>");
   console.log("<%= @room.player1_id %>");
   console.log("<%= @room.player2_id %>");
+
+  $('.glyphicon-minus').click(function() {
+    $(this).parent().parent().parent().toggle();
+    $(this).parent().parent().parent().parent().find('.closed-box').toggle();
+    $(this).parent().parent().parent().parent().addClass('popup-chatbox');
+    $(this).parent().parent().parent().parent().removeClass('popup-expanded');
+  });
+  $('.glyphicon-plus').click(function() {
+    $(this).parent().toggle();
+    $(this).parent().parent().find('.open-box').toggle();
+    $(this).parent().parent().addClass('popup-expanded');
+    $(this).parent().parent().removeClass('popup-chatbox');
+  });
 
 
   var pusher = new Pusher('f74ddd7f3eae987007b6');

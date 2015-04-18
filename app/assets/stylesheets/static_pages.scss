@@ -44,7 +44,7 @@ body {
 .sidebar-nav {
   float: right;
   background: #e4e4e4;
-  
+
   .table-holder {
     margin: 20px 0px 0 0;
     height: 470px;
@@ -267,7 +267,7 @@ p {
   background: #e4e4e4;
 }
 
-
+// css for chatbox //
 .popup-chatbox {
   height: 45px;
   position: fixed;
@@ -285,6 +285,155 @@ p {
     margin-left: 10px;
   }
 }
+
+.popup-expanded {
+  height: 285px;
+  position: fixed;
+  bottom: 0px;
+  background-color: white;
+  width: 285px;
+  right: 15px;
+  border: 1px solid #AAA;
+  box-shadow: 10px 10px 5px #AAA;
+
+}
+
+.popup-expanded .popup-head {
+  background: radial-gradient(#558372, #548271);
+  color: white;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 14px;
+  height: 45px;
+  p {
+    color: white;
+    float: left;
+    clear: both;
+    margin-top: 6px;
+    letter-spacing: 1.2px;
+    margin-left: 0px;
+    font-weight: 700;
+  }
+  .glyphicon-minus {
+    margin: 0;
+    margin-top: -1px;
+    float: right;
+    font-size: 21px;
+    background: radial-gradient(#558372, #548271);
+    color: #fff;
+    border: 0;
+  }
+}
+
+.popup-expanded .popup-head .popup-head-right {
+  float: right;
+}
+.popup-expanded .popup-head .popup-head-left {
+  float: left;
+}
+.popup-expanded .popup-head .popup-head-right a {
+  text-decoration: none;
+  color: white;
+}
+
+.popup-expanded .popup-messages {
+  height: 100%;
+  background: white;
+  color: black;
+}
+
+.text-field {
+  width: 280px;
+  height: 35px;
+  margin: 0;
+  margin-left: 4px;
+  bottom: 0px;
+}
+
+.send {
+  display: none;
+}
+.message-content {
+  height: 200px;
+  background: #eee;
+  width: flex;
+  overflow-y: scroll;
+}
+
+.message-text {
+  width: 180px;
+  background: white;
+  border-radius: 4px;
+  min-height: 60px;
+  margin-left: 0px;
+  margin-right: 0;
+  display: inline-block;
+  min-width: 100px;
+  max-width: 168px;
+  text-indent: 10px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+
+.left {
+  background: image-url("profile.png");
+  background-size: cover;
+  width: 45px;
+  height: 45px;
+  float: left;
+  display: inline-block;
+  position: relative;
+  margin-left: 0px;
+  border-radius: 0px;
+}
+
+.message-wrapper {
+  min-height: 50px;
+   width: 230px;
+   margin-left: 10px;
+   margin-bottom: 18px;
+   border-radius: 4px;
+   display: flex;
+}
+
+.left:before {
+  content: "";
+  height: 0;
+  width: 100%;
+  position: absolute;
+  border-right: 5px solid white;
+  border-bottom: 5px solid transparent;
+}
+
+.right {
+   background-image: image-url("profile.png");
+   background-size: cover;
+   width: 55px;
+   height: 45px;
+   float: right;
+   background-color: white;
+   display: inline-block;
+   position: relative;
+   margin: 0;
+   border-radius: 0px;
+ }
+
+ .right:before {
+   content: "";
+   height: 0;
+   width: 0;
+   position: absolute;
+   border-left: 5px solid white;
+   border-bottom: 5px solid transparent;
+ }
+
+ .form-control {
+   width: 300px;
+ }
+
+ // end of chatbox css //
+
 .glyphicon-plus {
   margin: 0;
   margin-top: -1px;
