@@ -27,7 +27,7 @@ $(function() {
     console.log(data.invitation)
     $('#inner-product-modal').html("<%= escape_javascript(render 'new_room') %>");
     $('#product-modal').modal("show");
-    $('#player1-field').val("<%= current_user.id %>");
+    $('#player1-field').val("<%= current_user ? current_user.id : null %>");
     $('#player2-field').val(data.from);
     $('#invitation-field').val(data.invitation);
     $('.submit-room').click(function() {
