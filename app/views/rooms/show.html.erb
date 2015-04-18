@@ -132,6 +132,8 @@ var onDrop = function(source, target) {
 
   // illegal move
   if (move === null) return 'snapback';
+  var trNum = $('tbody').children().length + 1;
+  $('.text-list').append('<tr><th><b>' + trNum + '</b> <div class="pipe">|</div> ' + move.from + "-" + move.to + '</th></tr>');
 
 
 
