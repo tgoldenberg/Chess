@@ -104,6 +104,9 @@
 
 <script src="/assets/chess.js"></script>
 <script>
+
+// set new board //
+
 var board,
   game = new Chess(),
   statusEl = $('#status'),
@@ -134,8 +137,6 @@ var onDrop = function(source, target) {
   if (move === null) return 'snapback';
   var trNum = $('tbody').children().length + 1;
   $('.text-list').append('<tr><th><b>' + trNum + '</b> <div class="pipe">|</div> ' + move.from + "-" + move.to + '</th></tr>');
-
-
 
   updateStatus(source, target);
 };
@@ -198,7 +199,10 @@ var cfg = {
 board = new ChessBoard('board', cfg);
 
 updateStatus();
+
+
 </script>
+
 <script>
 $(function() {
   if ("<%= current_user.id %>" === "<%= @room.player2_id %>") {
@@ -223,6 +227,8 @@ $(function() {
 
     onDrop(data.object_notation.split('-')[0], data.object_notation.split('-')[1]);
     board.move(data.object_notation);
+
+    switchTurn();
 
     var numBlackPawns = (data.fen.split(" ")[0].match(/p/g) || []).length;
     var numWhitePawns = (data.fen.split(" ")[0].match(/P/g) || []).length;
@@ -299,6 +305,48 @@ $(function() {
 
 
   });
-})
+
+  // set timer
+  var addedTimePerMove, formatTime, initialTime, intervalId, pad, remainingTime, switchTurn, turn, update;
+  initialTime = 15 * 60;
+  addedTimePerMove = 0;
+  turn = 1;
+  remainingTime = [initialTime, initialTime];
+  pad = function(x) {
+   return ('0' + x).slice(-2);
+  };
+  formatTime = function(t) {
+   var hours, minutes, seconds;
+   seconds = t % 60;
+   minutes = Math.floor(t / 60) % 60;
+   hours = Math.floor(t / 3600);
+   if (hours) {
+     return "" + hours + ":" + (pad(minutes)) + ":" + (pad(seconds));
+   } else {
+     return "" + minutes + ":" + (pad(seconds));
+   }
+  };
+  update = function() {
+   var i;
+   remainingTime[turn]--;
+   for (i = 0; i < 2; i++) {
+     $("#time" + i).text(formatTime(remainingTime[i]));
+   }
+   if (remainingTime[turn] <= 0) {
+     $("#time" + turn).removeClass('turn').addClass('loser');
+     alert('Game Over');
+     return clearInterval(intervalId);
+   }
+  };
+  switchTurn = function() {
+     $("#time" + turn).removeClass('turn');
+     turn = 1 - turn;
+     $("#time" + turn).addClass('turn');
+     return remainingTime[turn] += addedTimePerMove;
+  };
+
+  $('#time1').addClass('turn');
+  return intervalId = setInterval(update, 1000);
+});
 
 </script>
