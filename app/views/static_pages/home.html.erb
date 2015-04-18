@@ -16,6 +16,7 @@
   </div>
 </div>
 
+<% if user_signed_in? %>
 <script>
 $(function() {
   var pusher = new Pusher('f74ddd7f3eae987007b6');
@@ -47,3 +48,4 @@ $(function() {
 });
 
 </script>
+<% end %>
