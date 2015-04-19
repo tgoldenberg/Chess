@@ -3,5 +3,6 @@ class StaticPagesController < ApplicationController
     @users = User.all
     @invitation = Invitation.new
     @room = Room.new
+    @conversation = Conversation.new
   end
 end

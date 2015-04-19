@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150416051752) do
+ActiveRecord::Schema.define(version: 20150418203549) do
+
+  create_table "conversations", force: :cascade do |t|
+    t.integer  "sender_id"
+    t.integer  "recipient_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "invitations", force: :cascade do |t|
     t.integer  "sender_id"
@@ -19,6 +26,17 @@ ActiveRecord::Schema.define(version: 20150416051752) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer  "sender_id"
+    t.integer  "recipient_id"
+    t.integer  "conversation_id"
+    t.text     "body"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "messages", ["conversation_id"], name: "index_messages_on_conversation_id"
 
   create_table "moves", force: :cascade do |t|
     t.string   "notation"

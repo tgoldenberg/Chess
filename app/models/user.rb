@@ -7,4 +7,7 @@ class User < ActiveRecord::Base
   has_many :invitations, as: :sender, class: User
   has_many :invitations, as: :recipient, class: User
   has_many :rooms, through: :invitations
+
+  has_many :messages, as: :sender, class: User
+  has_many :messages, as: :recipient, class: User
 end
