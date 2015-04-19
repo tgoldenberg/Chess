@@ -94,22 +94,29 @@
     </div>
     <div class="popup-messages">
       <div class="message-content">
-        <div class="message-wrapper">
-          <div class="left">
-            <img src="/assets/profile.png"><p class="message-text"> <%= @conversation.id %></p>
-          </div>
-        </div>
-        <div class="message-wrapper">
-          <div class="right">
-            <p class="message-text">A test to see how the chat box responds to messages with more than one sentence. What do you think? Does this look okay?</p><img src="/assets/profile.png">
-          </div>
-        </div>
-        <div class="message-wrapper">
-          <div class="left">
-            <img src="/assets/profile.png"><p class="message-text"> A test to see how the chat box responds to messages with more than one sentence. What do you think? Does this look okay?</p>
-          </div>
-        </div>
+        <% @messages.each do |msg| %>
+          <% if msg.sender_id == current_user.id %>
+            <div class="message-wrapper">
+              <div class="right">
+                <p class="message-text"> <%= msg.body %></p><img src="/assets/profile.png">
+              </div>
+            </div>
+          <% else %>
+            <div class="message-wrapper">
+              <div class="left">
+                <img src="/assets/profile.png"><p class="message-text"> <%= msg.body %></p>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
       </div>
+      <%= simple_form_for [@conversation, @message], remote: true, html: { autocomplete: 'off'} do |f| %>
+          <%= f.hidden_field :sender_id, :id => 'message-sender' %>
+          <%= f.hidden_field :recipient_id, :id => 'message-recipient'  %>
+          <%= f.hidden_field :conversation_id %>
+          <input type="text" <%= f.input_field :body, autofocus: true, :class => 'text-field' %>
+          <%= f.button :submit, :label => 'send', :class => 'btn btn-primary send', :style => 'display: none;' %>
+      <% end %>
     </div>
   </div>
 </div>
@@ -122,11 +129,19 @@
     <%= f.submit "", :id => 'move-submit', :style => 'display: none;' %>
 <% end %>
 
-<script src="/assets/chess.js"></script>
 <script>
+$('#message-sender').val("<%= current_user ? current_user.id : null %>");
+<% if current_user.id == @room.player1_id %>
+$('#message-recipient').val("<%= @room.player2_id %>");
+<% else %>
+$('#message-recipient').val("<%= @room.player1_id %>");
+<% end %>
+</script>
 
+<script src="/assets/chess.js"></script>
+
+<script>
 // set new board //
-
 var board,
   game = new Chess(),
   statusEl = $('#status'),
@@ -220,7 +235,6 @@ board = new ChessBoard('board', cfg);
 
 updateStatus();
 
-
 </script>
 
 <script>
@@ -243,6 +257,7 @@ $(function() {
     $(this).parent().parent().find('.open-box').toggle();
     $(this).parent().parent().addClass('popup-expanded');
     $(this).parent().parent().removeClass('popup-chatbox');
+    $('.open-box').find('.message-content').scrollTop($('.open-box').find('.message-content').prop("scrollHeight"));
   });
 
 

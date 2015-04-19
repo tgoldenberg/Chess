@@ -12,6 +12,8 @@ class RoomsController < ApplicationController
     @conversation = Conversation.where(:sender_id => @room.player1_id, :recipient_id => @room.player2_id).last ||
     Conversation.where(:sender_id => @room.player2_id, :recipient_id => @room.player1_id).last ||
     Conversation.create!(:sender_id => @room.player1_id, :recipient_id => @room.player2_id)
+    @message = @conversation.messages.build
+    @messages = @conversation.messages.all.order('created_at DESC').first(20)
   end
 
   def new

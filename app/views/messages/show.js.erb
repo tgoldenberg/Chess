@@ -1,0 +1,4 @@
+console.log("This is a new message");
+$('.text-field').val("");
+$('.message-content').append("<%= escape_javascript(render @message) %>");
+$('.open-box').find('.message-content').scrollTop($('.open-box').find('.message-content').prop("scrollHeight"));
