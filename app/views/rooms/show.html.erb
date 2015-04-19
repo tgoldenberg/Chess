@@ -101,12 +101,12 @@
         </div>
         <div class="message-wrapper">
           <div class="right">
-            <p class="message-text"> <%= @conversation.id %></p><img src="/assets/profile.png">
+            <p class="message-text">A test to see how the chat box responds to messages with more than one sentence. What do you think? Does this look okay?</p><img src="/assets/profile.png">
           </div>
         </div>
         <div class="message-wrapper">
           <div class="left">
-            <img src="/assets/profile.png"><p class="message-text"> <%= @conversation.id %></p>
+            <img src="/assets/profile.png"><p class="message-text"> A test to see how the chat box responds to messages with more than one sentence. What do you think? Does this look okay?</p>
           </div>
         </div>
       </div>
@@ -115,21 +115,11 @@
 </div>
 
 <%= form_for [@room, @move], remote: true do |f| %>
-  <div class="field">
-    <%= f.text_field :notation, id: 'move-notation' %>
-  </div>
-  <div class="field">
-    <%= f.text_field :room_id  %>
-  </div>
-  <div class="field">
-    <%= f.text_field :user_id, id: 'move-user' %>
-  </div>
-  <div class="field">
-    <%= f.text_field :piece, id: 'move-piece'  %>
-  </div>
-  <div class="actions">
-    <%= f.submit "", :id => 'move-submit' %>
-  </div>
+    <%= f.hidden_field :notation, id: 'move-notation' %>
+    <%= f.hidden_field :room_id  %>
+    <%= f.hidden_field :user_id, id: 'move-user' %>
+    <%= f.hidden_field :piece, id: 'move-piece'  %>
+    <%= f.submit "", :id => 'move-submit', :style => 'display: none;' %>
 <% end %>
 
 <script src="/assets/chess.js"></script>
