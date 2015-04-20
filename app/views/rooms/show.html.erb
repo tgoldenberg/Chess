@@ -265,6 +265,10 @@ $(function() {
   var channelName = 'private-conversation.' + "<%= current_user ? current_user.id.to_s : 'null' %>";
   var channel = pusher.subscribe(channelName);
 
+  channel.bind('new_message', function(data) {
+  $('.message-content').append('<div class="message-wrapper"><div class="left"><img src="/assets/profile.png"><p class="message-text">' + data.message + '</p></div></div>');
+  $('.open-box').find('.message-content').scrollTop($('.open-box').find('.message-content').prop("scrollHeight"));
+  });
 
 
   channel.bind('new_move', function(data) {
@@ -278,6 +282,7 @@ $(function() {
 
     switchTurn();
 
+    // variables for number of each piece on the board
     var numBlackPawns = (data.fen.split(" ")[0].match(/p/g) || []).length;
     var numWhitePawns = (data.fen.split(" ")[0].match(/P/g) || []).length;
     var numBlackRooks = (data.fen.split(" ")[0].match(/r/g) || []).length;
@@ -350,8 +355,6 @@ $(function() {
     if (wQueenDiff > numWindowWhiteQueens) {
       $('.white-pieces').append('<img src="/assets/wQ.png" class="small-icons">');
     }
-
-
   });
 
   // set timer

@@ -19,8 +19,17 @@ class MessagesController < ApplicationController
   def create
     @conversation = Conversation.find(params[:conversation_id])
     @message = @conversation.messages.build message_params
+    @message.sender_id = current_user.id
+    if @conversation.sender_id == current_user.id
+      @message.recipient_id = @conversation.recipient_id
+    else
+      @message.recipient_id = @conversation.sender_id
+    end
     @message.save
     redirect_to conversation_message_path(@conversation, @message)
+    id = @message.recipient_id.to_s
+    channel = 'private-conversation.' + id
+    Pusher.trigger(channel, 'new_message', {message: @message.body.to_s })
   end
 
   private

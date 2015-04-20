@@ -13,7 +13,7 @@ class RoomsController < ApplicationController
     Conversation.where(:sender_id => @room.player2_id, :recipient_id => @room.player1_id).last ||
     Conversation.create!(:sender_id => @room.player1_id, :recipient_id => @room.player2_id)
     @message = @conversation.messages.build
-    @messages = @conversation.messages.all.order('created_at DESC').first(20)
+    @messages = @conversation.messages.all.last(20)
   end
 
   def new
