@@ -469,4 +469,16 @@ p {
   margin: 0;
   margin-top: -1px;
   float: right;
+  background: transparent;
+}
+
+// pulsing animation for chatbox header
+.pulsit {
+  animation: pulse linear 2s infinite;
+  -webkit-animation: pulse linear 2s infinite;
+}
+@-webkit-keyframes pulse {
+  0% { background: #78baa1;}
+  50% { background: #548271;}
+  100% { background: #78baa1;}
 }

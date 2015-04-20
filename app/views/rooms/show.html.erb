@@ -84,7 +84,7 @@
 <div class="bottom-row"></div>
 <div class="popup-chatbox">
   <div class="closed-box">
-    <p>OPEN CHAT</p>
+    <p class="closed-header">OPEN CHAT</p>
     <span class="glyphicon glyphicon-plus button-glyphs"></span>
   </div>
   <div class="open-box" style="display:none;">
@@ -256,6 +256,7 @@ $(function() {
   $('.glyphicon-plus').click(function() {
     $(this).parent().toggle();
     $(this).parent().parent().find('.open-box').toggle();
+    $('.popup-chatbox').removeClass('pulsit');
     $(this).parent().parent().addClass('popup-expanded');
     $(this).parent().parent().removeClass('popup-chatbox');
     $('.open-box').find('.message-content').scrollTop($('.open-box').find('.message-content').prop("scrollHeight"));
@@ -304,6 +305,9 @@ $(function() {
   var timeAgo = DateHelper.time_ago_in_words_with_parsing(data.time);
   $('.message-content').append('<h6>' + timeAgo + ' </h6><div class="message-wrapper"><div class="left"><img src="/assets/profile.png"><p class="message-text">' + data.message + '</p></div></div>');
   $('.open-box').find('.message-content').scrollTop($('.open-box').find('.message-content').prop("scrollHeight"));
+  if ($('.open-box').css('display') === 'none') {
+    $('.popup-chatbox').addClass('pulsit');
+  }
   });
 
 
