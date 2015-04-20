@@ -29,7 +29,7 @@ class MessagesController < ApplicationController
     redirect_to conversation_message_path(@conversation, @message)
     id = @message.recipient_id.to_s
     channel = 'private-conversation.' + id
-    Pusher.trigger(channel, 'new_message', {message: @message.body.to_s })
+    Pusher.trigger(channel, 'new_message', {message: @message.body.to_s, time: @message.created_at })
   end
 
   private

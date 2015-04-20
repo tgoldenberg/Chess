@@ -358,19 +358,22 @@ p {
   background: #eee;
   width: flex;
   overflow-y: scroll;
+  h6 {
+    text-align: center;
+    color: #b4b4b4;
+  }
 }
 
 .message-text {
   background: white;
-  border-radius: 4px;
-  min-height: 50px;
+  border-radius: 8px;
+  min-height: 20px;
   margin-left: 0;
   margin-right: 0;
   display: inline-block;
-  min-width: 80px;
+  min-width: 60px;
   max-width: 168px;
-  text-indent: 10px;
-}
+ }
 
 
 .left {
@@ -387,8 +390,10 @@ p {
   p {
     display: inline-block;
     margin-left: 13px;
-    text-align: left;
+    text-align: center;
     font-weight: 300;
+    padding: 5px;
+    letter-spacing: .2px;
   }
 }
 
@@ -407,8 +412,10 @@ p {
    p {
      display: inline-block;
      margin-right: 13px;
-     text-align: left;
+     text-align: center;
      font-weight: 300;
+     padding: 5px;
+     letter-spacing: .2px;
    }
 
  }
