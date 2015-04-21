@@ -126,7 +126,7 @@
     </div>
   </div>
 </div>
-<div class="game-over animated bounceInDown" style="display: none;">
+<div class="game-over animated bounceIn" style="display: none;">
   <h1>Game Over: White Wins!</h1>
   <p>Get ready for your aftergame debrief</p>
 </div>
@@ -147,7 +147,7 @@ var videoConference = function() {
     $('.captured-pieces').addClass('bounceOutDown');
     $('#board').delay(800).animate({
       "margin-left": "200px"
-    }, 1000);
+    }, 'easeOutBounce');
     $('#board').promise().done(function() {
       $(this).css({
         'float': 'right',
@@ -156,7 +156,7 @@ var videoConference = function() {
       });
       $('.clock').animate({
         "margin-left":"204px"
-      }, 800);
+      }, 'easeOutBounce');
       $('.clock').promise().done(function() {
         $(this).css({
           'position':'absolute',
@@ -172,11 +172,15 @@ var videoConference = function() {
         });
         $('.video-box').delay(500).fadeIn();
         $('.video-box-self').delay(500).fadeIn();
+        $('.video-box-self').promise().done(function() {
+          $('.game-over').removeClass('bounceIn').addClass('bounceOut');
+        })
       });
     });
+
   });
 };
-
+videoConference();
 
 
 </script>
@@ -371,6 +375,7 @@ $(function() {
 
     if (game.in_checkmate() === true || game.in_draw() === true) {
       videoConference();
+      $('.game-over').toggle();
     }
 
     onDrop(data.object_notation.split('-')[0], data.object_notation.split('-')[1]);
