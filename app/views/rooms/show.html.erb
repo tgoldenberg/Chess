@@ -2,14 +2,18 @@
 
 <div class="col-md-9">
   <div class="chess-holder" data-user="<%= current_user.id %>">
+    <div class="video-box" style="width: 370px; background: black; height: 390px; position: absolute; display: none;"></div>
+
     <div class="col-sm-2 timer-holder clock" style="font-size: 20px;">
-      <div class="button-holder">
+      <div class="video-box-self" style="width: 190px; background: black; height: 138px; display: none; position: absolute; bottom: 0; left: 0; margin-left: -210px;"></div>
+
+      <div class="button-holder first-button-holder">
     <span class="glyphicon glyphicon-hourglass button-glyphs"></span>  <p>Player <b>1</b></p><span class="glyphicon glyphicon-minus button-glyphs"></span>
       </div>
-        <div class="time-box">
+        <div class="time-box first-time-box">
           <div id="time0" class="time-digits"></div>
         </div>
-        <div class="space-keeper">
+        <div class="space-keeper first-space-keeper ">
           <p class="line-break"></p>
           <div class="player-info">
             <div class="user-header">
@@ -21,7 +25,6 @@
               <span class="glyphicon glyphicon-star"></span>
               <span class="glyphicon glyphicon-star"></span>
               <span class="glyphicon glyphicon-star"></span>
-
             </p>
           </div>
         </div>
@@ -31,7 +34,7 @@
         <div class="time-box">
           <div id="time1" class="time-digits"></div>
         </div>
-        <div class="space-keeper">
+        <div class="space-keeper second-space-keeper">
           <p class="line-break"></p>
           <div class="player-info">
             <div class="user-header">
@@ -52,7 +55,7 @@
     <!-- <p>Status: <span id="status"></span></p>
     <p>FEN: <span id="fen"></span></p>
     <p>PGN: <span id="pgn"></span></p> -->
-    <div class="col-sm-2 captured-pieces">
+    <div class="col-sm-2 captured-pieces animated">
       <div class="white-pieces">
         <div class="button-holder">
           <span class="glyphicon glyphicon-ok-circle button-glyphs"></span><p>Captured Black</p>
@@ -123,6 +126,11 @@
     </div>
   </div>
 </div>
+<div class="game-over animated bounceInDown" style="display: none;">
+  <h1>Game Over: White Wins!</h1>
+  <p>Get ready for your aftergame debrief</p>
+</div>
+
 
 <%= form_for [@room, @move], remote: true do |f| %>
     <%= f.hidden_field :notation, id: 'move-notation' %>
@@ -131,6 +139,48 @@
     <%= f.hidden_field :piece, id: 'move-piece'  %>
     <%= f.submit "", :id => 'move-submit', :style => 'display: none;' %>
 <% end %>
+
+<script>
+
+var videoConference = function() {
+  $('.game-over').toggle().delay(2000).queue(function(next) {
+    $('.captured-pieces').addClass('bounceOutDown');
+    $('#board').delay(800).animate({
+      "margin-left": "200px"
+    }, 1000);
+    $('#board').promise().done(function() {
+      $(this).css({
+        'float': 'right',
+        'margin-left': '0',
+        'margin-right': '10px'
+      });
+      $('.clock').animate({
+        "margin-left":"204px"
+      }, 800);
+      $('.clock').promise().done(function() {
+        $(this).css({
+          'position':'absolute',
+          'bottom':'0',
+
+        });
+        $('.first-space-keeper').hide();
+        $('.first-time-box').hide();
+        $('.first-button-holder').hide();
+        $('.second-space-keeper').fadeOut();
+        $(this).animate({
+          'height': '138px'
+        });
+        $('.video-box').delay(500).fadeIn();
+        $('.video-box-self').delay(500).fadeIn();
+      });
+    });
+  });
+};
+
+
+
+</script>
+
 
 <script>
 $('#message-sender').val("<%= current_user ? current_user.id : null %>");
@@ -318,6 +368,10 @@ $(function() {
     console.log;
     console.log(data.object_notation);
     console.log(game.turn());
+
+    if (game.in_checkmate() === true || game.in_draw() === true) {
+      videoConference();
+    }
 
     onDrop(data.object_notation.split('-')[0], data.object_notation.split('-')[1]);
     board.move(data.object_notation);

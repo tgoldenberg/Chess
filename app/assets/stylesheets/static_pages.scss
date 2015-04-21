@@ -3,6 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 body {
   background-color: #e4e4e4;
+  overflow: hidden;
 }
 .navbar-default.navbar {
   margin-bottom: 0px;
@@ -481,4 +482,18 @@ p {
   0% { background: #78baa1;}
   50% { background: #548271;}
   100% { background: #78baa1;}
+}
+
+.game-over {
+  width: 500px;
+  height: 150px;
+  background: radial-gradient(#558372, #78baa1);
+  color: white;
+  z-index: 100;
+  opacity: 0.9;
+  top: 10px;
+  border-radius: 4px;
+  position: absolute;
+  text-align: center;
+  margin-left: 350px;
 }
