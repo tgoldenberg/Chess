@@ -1,6 +1,8 @@
 console.log("Hello world!");
 
-    if (game.in_checkmate() === true || game.in_draw() === true) {
-      videoConference();
-      
-    }
+if (game.in_checkmate() === true || game.in_draw() === true) {
+  videoConference();
+
+}
+
+$('.text-list').find('tr').last().append('<th> <%= link_to 'Rearrange Board', "#", class: 'btn btn-success btn-sm'  %></th>')

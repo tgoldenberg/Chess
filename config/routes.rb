@@ -9,7 +9,6 @@ Rails.application.routes.draw do
   resources :rooms do
     resources :moves
   end
-
   root 'static_pages#home'
 
 end

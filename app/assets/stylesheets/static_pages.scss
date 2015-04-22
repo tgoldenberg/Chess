@@ -497,3 +497,64 @@ p {
   text-align: center;
   margin-left: 350px;
 }
+
+// css for video chat
+
+.video-chat-buttons {
+  font-size: 26px;
+  color: #e8e8e8;
+  margin: 2px 0 0 0;
+  padding: 0px;
+  padding-top: 5px;
+  padding-left: 10px;
+  a {
+    background: #78baa1;
+    padding: 11.5px;
+    margin: 0 0 0 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+}
+.button-container {
+  background: #e4e4e4;
+  width: 370px  ;
+  height: 50px;
+  padding: 1px;
+  display: inline-block;
+  box-shadow: -5px 5px 5px #b4b4b4;
+
+}
+.video-box-child {
+  width: 370px;
+  height: 278px;
+  background: black;
+}
+.video-box-parent {
+  width: 370px;
+  background: black;
+  height: 328px;
+  position: absolute;
+  display: none;
+}
+.video-buttons {
+  width: 179px;
+  height: 45px;
+  background: #548271;
+  margin: auto;
+  margin-top: 2px;
+  margin-right:5px;
+  border-radius: 4px;
+}
+
+#camera {
+  padding-right: 23px;
+}
+#mic {
+  padding-right: 74px;
+}

@@ -16,6 +16,8 @@ class MovesController < ApplicationController
     @move = @room.moves.build
   end
 
+
+
   def create
     @room = Room.find(params[:room_id])
     @move = @room.moves.build move_params

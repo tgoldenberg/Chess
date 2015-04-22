@@ -9,6 +9,7 @@ class RoomsController < ApplicationController
   def show
     @room = Room.find(params[:id])
     @move = Move.new(:room => @room)
+    @moves = @room.moves.all 
     @conversation = Conversation.where(:sender_id => @room.player1_id, :recipient_id => @room.player2_id).last ||
     Conversation.where(:sender_id => @room.player2_id, :recipient_id => @room.player1_id).last ||
     Conversation.create!(:sender_id => @room.player1_id, :recipient_id => @room.player2_id)

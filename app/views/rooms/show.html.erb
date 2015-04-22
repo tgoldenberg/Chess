@@ -2,10 +2,24 @@
 
 <div class="col-md-9">
   <div class="chess-holder" data-user="<%= current_user.id %>">
-    <div class="video-box" style="width: 370px; background: black; height: 390px; position: absolute; display: none;"></div>
+    <div class="video-box-parent video-box">
+      <div class="video-box-child" id="otherVideos"></div>
+
+
+        <div class="button-container">
+          <div class="video-buttons" style="float:left;">
+            <span class="glyphicon glyphicon-facetime-video video-chat-buttons button-glyphs"><a id="camera" style="text-decoration: none; color: white;" href="#">CAMERA</a></span>
+          </div>
+
+          <div class="video-buttons" style="float:right;">
+            <span class="glyphicon glyphicon-volume-up video-chat-buttons button-glyphs"><a id="mic" style="text-decoration: none; color: white;" href="#">MIC</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="col-sm-2 timer-holder clock" style="font-size: 20px;">
-      <div class="video-box-self" style="width: 190px; background: black; height: 138px; display: none; position: absolute; bottom: 0; left: 0; margin-left: -210px;"></div>
+      <div class="video-box-self" id="myVideo" style="width: 190px; background: black; height: 138px; display: none; position: absolute; bottom: 0; left: 0; margin-left: -210px;"></div>
 
       <div class="button-holder first-button-holder">
     <span class="glyphicon glyphicon-hourglass button-glyphs"></span>  <p>Player <b>1</b></p><span class="glyphicon glyphicon-minus button-glyphs"></span>
@@ -76,6 +90,16 @@
   <div class="table-holder container-sm">
   <table class="table text-holder">
     <tbody class="text-list">
+      <% @moves.each_with_index do |move, idx| %>
+      <% if move.notation.split('-')[0] == 'undefined' %>
+      <% @moves[idx].delete %>
+      <% end %>
+      <% end %>
+      <% @moves.each_with_index do |move, idx| %>
+      <% if idx % 2 == 0 && idx > 1 && move.notation.split('-')[0] != 'undefined' %>
+      <tr id="<% @room.moves.index(move)/2 + 1 %>"><th><b> <%= @room.moves.index(move)/2 %></b> <div class="pipe">|</div> <%= move.notation %></th><th> <%= link_to 'Rearrange Board', '#', class: 'btn btn-success btn-sm'  %></th></tr>
+      <% end %>
+      <% end %>
     </tbody>
   </table>
   </div>
@@ -140,6 +164,8 @@
     <%= f.submit "", :id => 'move-submit', :style => 'display: none;' %>
 <% end %>
 
+
+<script src="https://cdn.cine.io/cineio-peer.js"></script>
 <script>
 
 var videoConference = function() {
@@ -174,13 +200,66 @@ var videoConference = function() {
         $('.video-box-self').delay(500).fadeIn();
         $('.video-box-self').promise().done(function() {
           $('.game-over').removeClass('bounceIn').addClass('bounceOut');
-        })
+
+          var PUBLIC_KEY = '2680b2a108dc3c685fdd05cf24651182';
+          var ROOM_NAME = 'example';
+
+          CineIOPeer.init(PUBLIC_KEY);
+          // start camera and microphone automatically
+          // CineIOPeer.startCameraAndMicrophone();
+          // CineIOPeer.startCamera();
+          // join a room right away
+          CineIOPeer.join(ROOM_NAME);
+          // If user rejected permission to access camera / microphone
+          CineIOPeer.on('media-rejected', function(data) {
+            alert('Media rejected.');
+          });
+          // when local or remote media is added
+          CineIOPeer.on('media-added', function(data) {
+            var videoDOMNode = data.videoElement, domId;
+            if (data.local) {
+              // local video
+              domId = 'myVideo';
+            } else {
+              // remote video
+              domId = 'otherVideos';
+            }
+
+            // $('#myVideo').find('video').fadeOut();
+            // $('#otherVideos').find('video').fadeOut();
+              $('#' + domId).find('video').hide();
+              document.getElementById(domId).appendChild(videoDOMNode);
+              $('#myVideo').find('video').css('width', '190px');
+              $('#otherVideos').find('video').css('width', '370px');
+
+          });
+          // when local or remote media is removed
+          // CineIOPeer.on('media-removed', function(data) {
+          //   updateMessage(data)
+          // });
+          //
+          $('#camera').click(function() {
+            if (CineIOPeer.cameraRunning()) {
+              CineIOPeer.stopCamera();
+            } else {
+              CineIOPeer.startCamera();
+            }
+          });
+          // Error handler
+          CineIOPeer.on('error', function(err) {
+            if (typeof(err.support) != "undefined" && !err.support) {
+              alert("This browser does not support WebRTC.");
+            } else if (err.msg) {
+              alert(err.msg);
+            }
+          });
+        });
       });
     });
-
   });
 };
 videoConference();
+
 
 
 </script>
@@ -228,7 +307,7 @@ var onDrop = function(source, target) {
   // illegal move
   if (move === null) return 'snapback';
   var trNum = $('tbody').children().length + 1;
-  $('.text-list').append('<tr><th><b>' + trNum + '</b> <div class="pipe">|</div> ' + move.from + "-" + move.to + '</th></tr>');
+  $('.text-list').append('<tr id="' + trNum + '"><th><b>' + trNum + '</b> <div class="pipe">|</div> ' + move.from + "-" + move.to + '</th></tr>');
 
   updateStatus(source, target);
 };
@@ -372,11 +451,6 @@ $(function() {
     console.log;
     console.log(data.object_notation);
     console.log(game.turn());
-
-    if (game.in_checkmate() === true || game.in_draw() === true) {
-      videoConference();
-      $('.game-over').toggle();
-    }
 
     onDrop(data.object_notation.split('-')[0], data.object_notation.split('-')[1]);
     board.move(data.object_notation);
