@@ -8,10 +8,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" href="animate.css">
 </head>
-<body>
-<%= render 'layouts/header' %>
-
+<body data-user="<%= current_user ? current_user.id : nil %>"> <!-- #set current_user.id as a variable to use in JS files -->
+  <%= render 'layouts/header' %>
   <%= yield %>
-<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script> -->
 </body>
 </html>
