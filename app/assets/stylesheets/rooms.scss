@@ -1,6 +1,29 @@
 // Place all the styles related to the Rooms controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.col-md-9 {
+  .chess-holder {
+    .video-box-parent .video-box {
+      #otherVideos {
+
+      }
+      .button-container {
+        .video-buttons {
+          span.glyphicon .glyphicon-facetime-video .video-chat-buttons .button-glyphs {
+          }
+        }
+        .video-buttons {
+          span.glyphicon .glyphicon-volume-up .video-chat-buttons .buttons-glyphs {
+
+          }
+        }  
+      }
+    }
+  }
+}
+
+
+
 
 
 .small-icons {
