@@ -1,5 +1,5 @@
 <div class="well container">
-  <h1>Static Pages</h1>
+  <h1>Home</h1>
 </div>
   <% if user_signed_in? %>
     <% @users.each do |user|  %>
@@ -16,36 +16,32 @@
   </div>
 </div>
 
-<% if user_signed_in? %>
 <script>
 $(function() {
+  // set variables for Pusher API
   var pusher = new Pusher('f74ddd7f3eae987007b6');
-  var channelName = 'private-conversation.' + "<%= current_user ? current_user.id.to_s : 'null' %>";
+  var channelName = 'private-conversation.' + $('body').data('user');
   var channel = pusher.subscribe(channelName);
 
+  // create an event for game request and render modal window for invitation recipient
   channel.bind('game_request', function(data) {
-    console.log(data.from);
-    console.log(data.invitation)
     $('#inner-product-modal').html("<%= escape_javascript(render 'new_room') %>");
     $('#product-modal').modal("show");
-    $('#player1-field').val("<%= current_user ? current_user.id : null %>");
+    // fill in player id fields in new room form
+    $('#player1-field').val($('body').data('user'));
     $('#player2-field').val(data.from);
     $('#invitation-field').val(data.invitation);
+    // click submit button twice to ensure that new room is created and user is redirected
     $('.submit-room').click(function() {
-      console.log('room created');
       $('.submit-room').click(function() {
         $('#room-create').submit();
-      })
+      });
     });
-
-
   });
-
+  // create an event for acceptance of the game and creation of the new room - direct invitation sender to the room
   channel.bind('game_acceptance', function(data) {
     console.log(data.room);
     window.location = '/rooms/' + data.room;
   });
 });
-
 </script>
-<% end %>
