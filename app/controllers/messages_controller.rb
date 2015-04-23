@@ -1,19 +1,14 @@
 class MessagesController < ApplicationController
   respond_to :html, :js
-  before_action :set_message, only: [:show, :edit, :update, :destroy]
 
   def index
-    @messages = Message.all
+    @conversation = Conversation.find(params[:conversation_id])
+    @messages = @conversation.messages.all
   end
 
   def show
     @conversation = Conversation.find(params[:conversation_id])
     @message = @conversation.messages.find(params[:id])
-  end
-
-  def new
-    @conversation = Conversation.find(params[:conversation_id])
-    @message = @conversation.messages.build message_params
   end
 
   def create
@@ -33,11 +28,8 @@ class MessagesController < ApplicationController
   end
 
   private
-    def set_message
-      @message = Message.find(params[:id])
-    end
 
-    def message_params
-      params.require(:message).permit(:sender_id, :recipient_id, :conversation_id, :body)
-    end
+  def message_params
+    params.require(:message).permit(:sender_id, :recipient_id, :conversation_id, :body)
+  end
 end
