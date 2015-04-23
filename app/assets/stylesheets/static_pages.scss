@@ -1,13 +1,88 @@
 // Place all the styles related to the StaticPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+// css for signed in home page
+.well .container {
+  h1 {
+
+  }
+}
+h3 {
+
+}
+li {
+  .btn .btn-success {
+
+  }
+}
+
+// styles for home page modal on invitation sender side
+.modal .fade {
+  .modal-dialog {
+    .modal-content {
+      .modal-header {
+        h2 {
+          img {
+
+          }
+        }
+        .well {
+          p {
+
+          }
+        }
+        th {
+          .btn .btn-lg .btn-success .cancel {
+
+          }
+        }
+      }
+    }
+  }
+}
+// styles for modal window for invitation recipient with form for new room
+.modal .fade {
+  .modal-dialog {
+    .modal-content {
+      .modal-header {
+        h2 {
+          img {
+
+          }
+        }
+        .well {
+          p {
+
+          }
+        }
+        th {
+          .btn .btn-success .btn-lg {
+
+          }
+          .btn .btn-default .cancel {
+
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
 body {
   background-color: #e4e4e4;
   overflow: hidden;
 }
+
+// styles for the navigation bar
 .navbar-default.navbar {
   margin-bottom: 0px;
 }
+
+// chessboard container
 .col-md-9 {
   background: #E4E4E4;
   padding-top: 15px;
