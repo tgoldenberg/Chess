@@ -1,5 +1,6 @@
 <div class="well container">
   <h1>Home</h1>
+  <li> <%= link_to 'Sign Up', modal_register_path, remote: true, :id => 'modal_register' %></li>
 </div>
   <% if user_signed_in? %>
     <% @users.each do |user|  %>
@@ -18,6 +19,11 @@
 
 <script>
 $(function() {
+  $('#modal_register').click(function() {
+    $('#inner-product-modal').html("<%= escape_javascript(render 'user_form') %>");
+    $('#product-modal').modal('show');
+  });
+
   // set variables for Pusher API
   var pusher = new Pusher('f74ddd7f3eae987007b6');
   var channelName = 'private-conversation.' + $('body').data('user');
