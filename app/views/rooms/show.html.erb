@@ -1,72 +1,75 @@
 <div class="col-md-9">
-  <div class="chess-holder" data-user="<%= current_user.id %>">
+  <div class="chess-holder" data-player1="<%= @room.player1_id %>" data-player2="<%= @room.player2_id %>">
+    <!-- divs for video screens of self and other -->
     <div class="video-box-parent video-box">
       <div class="video-box-child" id="otherVideos"></div>
-
-
         <div class="button-container">
           <div class="video-buttons" style="float:left;">
             <span class="glyphicon glyphicon-facetime-video video-chat-buttons button-glyphs"><a id="camera" style="text-decoration: none; color: white;" href="#">CAMERA</a></span>
           </div>
-
           <div class="video-buttons" style="float:right;">
             <span class="glyphicon glyphicon-volume-up video-chat-buttons button-glyphs"><a id="mic" style="text-decoration: none; color: white;" href="#">MIC</a></span>
           </div>
         </div>
       </div>
     </div>
-
+    <!-- divs for chess timers 1 & 2  -->
     <div class="col-sm-2 timer-holder clock" style="font-size: 20px;">
       <div class="video-box-self" id="myVideo" style="width: 190px; background: black; height: 138px; display: none; position: absolute; bottom: 0; left: 0; margin-left: -210px;"></div>
-
       <div class="button-holder first-button-holder">
-    <span class="glyphicon glyphicon-hourglass button-glyphs"></span>  <p>Player <b>1</b></p><span class="glyphicon glyphicon-minus button-glyphs"></span>
+        <span class="glyphicon glyphicon-hourglass button-glyphs"></span>  <p>Player <b>1</b></p><span class="glyphicon glyphicon-minus button-glyphs"></span>
       </div>
-        <div class="time-box first-time-box">
-          <div id="time0" class="time-digits"></div>
-        </div>
-        <div class="space-keeper first-space-keeper ">
-          <p class="line-break"></p>
-          <div class="player-info">
-            <div class="user-header">
-               <p><span class="glyphicon glyphicon-user button-glyphs"></span>ryanG360</p><br><br>
-            </div>
-            <p>Brooklyn, NY</p><br>
-            <p>Ranking: 2400</p><br>
-            <p>User Rank:
-              <span class="glyphicon glyphicon-star"></span>
-              <span class="glyphicon glyphicon-star"></span>
-              <span class="glyphicon glyphicon-star"></span>
-            </p>
+      <div class="time-box first-time-box">
+        <div id="time0" class="time-digits"></div>
+      </div>
+      <!-- divs for player 1 info -->
+      <div class="space-keeper first-space-keeper ">
+        <p class="line-break"></p>
+        <div class="player-info">
+          <div class="user-header">
+             <p><span class="glyphicon glyphicon-user button-glyphs"></span>ryanG360</p><br><br>
           </div>
+          <p>Brooklyn, NY</p><br>
+          <p>Ranking: 2400</p><br>
+          <p>User Rank:
+            <span class="glyphicon glyphicon-star"></span>
+            <span class="glyphicon glyphicon-star"></span>
+            <span class="glyphicon glyphicon-star"></span>
+          </p>
         </div>
-        <div class="button-holder second-button-holder">
+      </div>
+      <div class="button-holder second-button-holder">
         <span class="glyphicon glyphicon-hourglass button-glyphs"></span><p>Player <b>2</b></p><span class="glyphicon glyphicon-minus button-glyphs"></span>
-        </div>
-        <div class="time-box">
-          <div id="time1" class="time-digits"></div>
-        </div>
-        <div class="space-keeper second-space-keeper">
-          <p class="line-break"></p>
-          <div class="player-info">
-            <div class="user-header">
-               <p><span class="glyphicon glyphicon-user button-glyphs"></span>tGold108</p><br><br>
-            </div>
-            <p>Long Beach, NY</p><br>
-            <p>Ranking: 1200</p><br>
-            <p>User Rank
-              <span class="glyphicon glyphicon-star"></span>
-              <span class="glyphicon glyphicon-star"></span>
-              <span class="glyphicon glyphicon-star"></span>
-              <span class="glyphicon glyphicon-star"></span>
-            </p>
+      </div>
+      <div class="time-box">
+        <div id="time1" class="time-digits"></div>
+      </div>
+      <!-- divs for player 2 info -->
+      <div class="space-keeper second-space-keeper">
+        <p class="line-break"></p>
+        <div class="player-info">
+          <div class="user-header">
+             <p><span class="glyphicon glyphicon-user button-glyphs"></span>tGold108</p><br><br>
           </div>
+          <p>Long Beach, NY</p><br>
+          <p>Ranking: 1200</p><br>
+          <p>User Rank
+            <span class="glyphicon glyphicon-star"></span>
+            <span class="glyphicon glyphicon-star"></span>
+            <span class="glyphicon glyphicon-star"></span>
+            <span class="glyphicon glyphicon-star"></span>
+          </p>
         </div>
+      </div>
     </div>
+    <!-- chess board  -->
     <div class="col-sm-8" id="board" style="width: 537px"></div>
+
     <!-- <p>Status: <span id="status"></span></p>
     <p>FEN: <span id="fen"></span></p>
     <p>PGN: <span id="pgn"></span></p> -->
+
+    <!-- captured pieces section -->
     <div class="col-sm-2 captured-pieces animated">
       <div class="white-pieces">
         <div class="button-holder">
@@ -84,23 +87,26 @@
   </div>
 </div>
 
+<!-- sidebar for move notation -->
 <div class="sidebar-nav col-md-3">
   <div class="table-holder container-sm">
   <table class="table text-holder">
     <tbody class="text-list">
       <% @moves.each_with_index do |move, idx| %>
+      <!-- eliminate duplicate notations -->
       <% if move.notation.split('-')[0] == 'undefined' %>
       <% @moves[idx].delete %>
       <% end %>
       <% end %>
       <% @moves.each_with_index do |move, idx| %>
       <% if idx % 2 == 0 && idx > 1 && move.notation.split('-')[0] != 'undefined' %>
-      <tr id="<% @room.moves.index(move)/2 + 1 %>"><th><b> <%= @room.moves.index(move)/2 %></b> <div class="pipe">|</div> <%= move.notation %></th><th> <%= link_to 'Rearrange Board', '#', class: 'btn btn-success btn-sm'  %></th></tr>
+      <tr id="<% @room.moves.index(move)/2 + 1 %>"><th><b> <%= @room.moves.index(move)/2 %></b> <div class="pipe">|</div> <%= move.notation %></th><th> <%= link_to 'Rearrange Board', new_board_path(:move_id => move.id, :fen => move.piece), remote: true, class: 'btn btn-success btn-sm'  %></th></tr>
       <% end %>
       <% end %>
     </tbody>
   </table>
   </div>
+  <!-- buttons to offer draw or quit -->
   <div class="buttons">
     <button class="btn"><span class="glyphicon glyphicon-hand-right button-glyphs"></span><li> <%= link_to 'DRAW', "#", style: 'text-decoration: none; color: white;' %></li></button>
     <td></td>
@@ -108,6 +114,7 @@
   </div>
 </div>
 
+<!-- divs for chatbox -->
 <div class="bottom-row"></div>
 <div class="popup-chatbox">
   <div class="closed-box">
@@ -148,12 +155,14 @@
     </div>
   </div>
 </div>
+
+<!-- divs for end of game animation -->
 <div class="game-over animated bounceIn" style="display: none;">
   <h1>Game Over: White Wins!</h1>
   <p>Get ready for your aftergame debrief</p>
 </div>
 
-
+<!-- hidden form for moves -->
 <%= form_for [@room, @move], remote: true do |f| %>
     <%= f.hidden_field :notation, id: 'move-notation' %>
     <%= f.hidden_field :room_id  %>
@@ -164,222 +173,27 @@
 
 
 <script src="https://cdn.cine.io/cineio-peer.js"></script>
-<script>
-
-var videoConference = function() {
-  $('.game-over').toggle().delay(2000).queue(function(next) {
-    $('.captured-pieces').addClass('bounceOutDown');
-    $('#board').delay(800).animate({
-      "margin-left": "200px"
-    }, 'easeOutBounce');
-    $('#board').promise().done(function() {
-      $(this).css({
-        'float': 'right',
-        'margin-left': '0',
-        'margin-right': '10px'
-      });
-      $('.clock').animate({
-        "margin-left":"204px"
-      }, 'easeOutBounce');
-      $('.clock').promise().done(function() {
-        $(this).css({
-          'position':'absolute',
-          'bottom':'0',
-
-        });
-        $('.first-space-keeper').hide();
-        $('.first-time-box').hide();
-        $('.first-button-holder').hide();
-        $('.second-space-keeper').fadeOut();
-        $(this).animate({
-          'height': '138px'
-        });
-        $('.video-box').delay(500).fadeIn();
-        $('.video-box-self').delay(500).fadeIn();
-        $('.video-box-self').promise().done(function() {
-          $('.game-over').removeClass('bounceIn').addClass('bounceOut');
-
-          var PUBLIC_KEY = '2680b2a108dc3c685fdd05cf24651182';
-          var ROOM_NAME = 'example';
-
-          CineIOPeer.init(PUBLIC_KEY);
-          // start camera and microphone automatically
-          // CineIOPeer.startCameraAndMicrophone();
-          // CineIOPeer.startCamera();
-          // join a room right away
-          CineIOPeer.join(ROOM_NAME);
-          // If user rejected permission to access camera / microphone
-          CineIOPeer.on('media-rejected', function(data) {
-            alert('Media rejected.');
-          });
-          // when local or remote media is added
-          CineIOPeer.on('media-added', function(data) {
-            var videoDOMNode = data.videoElement, domId;
-            if (data.local) {
-              // local video
-              domId = 'myVideo';
-            } else {
-              // remote video
-              domId = 'otherVideos';
-            }
-
-            // $('#myVideo').find('video').fadeOut();
-            // $('#otherVideos').find('video').fadeOut();
-              $('#' + domId).find('video').hide();
-              document.getElementById(domId).appendChild(videoDOMNode);
-              $('#myVideo').find('video').css('width', '190px');
-              $('#otherVideos').find('video').css('width', '370px');
-
-          });
-          // when local or remote media is removed
-          // CineIOPeer.on('media-removed', function(data) {
-          //   updateMessage(data)
-          // });
-          //
-          $('#camera').click(function() {
-            if (CineIOPeer.cameraRunning()) {
-              CineIOPeer.stopCamera();
-            } else {
-              CineIOPeer.startCamera();
-            }
-          });
-          // Error handler
-          CineIOPeer.on('error', function(err) {
-            if (typeof(err.support) != "undefined" && !err.support) {
-              alert("This browser does not support WebRTC.");
-            } else if (err.msg) {
-              alert(err.msg);
-            }
-          });
-        });
-      });
-    });
-  });
-};
-// videoConference();
-
-
-
-</script>
-
-
-<script>
-$('#message-sender').val("<%= current_user ? current_user.id : null %>");
-<% if current_user.id == @room.player1_id %>
-$('#message-recipient').val("<%= @room.player2_id %>");
-<% else %>
-$('#message-recipient').val("<%= @room.player1_id %>");
-<% end %>
-</script>
-
+<script src="/assets/initialize_video.js"></script>
+<script src="/assets/fill_message_field.js"></script>
 <script src="/assets/chess.js"></script>
-<script>
-// set new board //
-var currentUser = $('.chess-holder').data('user');
-var board,
-  game = new Chess(),
-  statusEl = $('#status'),
-  fenEl = $('#fen'),
-  pgnEl = $('#pgn');
-
-// do not pick up pieces if the game is over
-// only pick up pieces for the side to move
-var onDragStart = function(source, piece, position, orientation) {
-  if (game.game_over() === true ||
-      (game.turn() === 'w' && "<%= current_user.id %>" === "<%= @room.player2_id %>") ||
-      (game.turn() === 'b' && "<%= current_user.id %>" === "<%= @room.player1_id %>") ||
-      (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-      (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
-    return false;
-  }
-};
-
-var onDrop = function(source, target) {
-  // see if the move is legal
-  var move = game.move({
-    from: source,
-    to: target,
-    promotion: 'q' // NOTE: always promote to a queen for example simplicity
-  });
-
-  // illegal move
-  if (move === null) return 'snapback';
-  var trNum = $('tbody').children().length + 1;
-  $('.text-list').append('<tr id="' + trNum + '"><th><b>' + trNum + '</b> <div class="pipe">|</div> ' + move.from + "-" + move.to + '</th></tr>');
-
-  updateStatus(source, target);
-};
-
-// update the board position after the piece snap
-// for castling, en passant, pawn promotion
-var onSnapEnd = function() {
-  board.position(game.fen());
-};
-
-var updateStatus = function(source, target) {
-  var status = '';
-
-  var moveColor = 'White';
-  if (game.turn() === 'b') {
-    moveColor = 'Black';
-  }
-
-  // checkmate?
-  if (game.in_checkmate() === true) {
-    status = 'Game over, ' + moveColor + ' is in checkmate.';
-  }
-
-  // draw?
-  else if (game.in_draw() === true) {
-    status = 'Game over, drawn position';
-  }
-
-  // game still on
-  else {
-    status = moveColor + ' to move';
-
-    // check?
-    if (game.in_check() === true) {
-      status += ', ' + moveColor + ' is in check';
-    }
-  }
-
-  statusEl.html(status);
-  fenEl.html(game.fen());
-  pgnEl.html(game.pgn());
-  $('#move-notation').val(source + '-' + target);
-  $('#move-piece').val(game.fen());
-  $('#move-user').val(currentUser)
-  $('#move-submit').submit();
-};
-
-var cfg = {
-  draggable: true,
-  showNotation: false,
-  position: 'start',
-  snapSpeed: 100,
-  snapbackSpeed: 400,
-  moveSpeed: 'slow',
-  pieceTheme: "/assets/{piece}.png",
-  onDragStart: onDragStart,
-  onDrop: onDrop,
-  onSnapEnd: onSnapEnd
-};
-board = new ChessBoard('board', cfg);
-
-updateStatus();
-
-</script>
+<script src="/assets/new_board.js"></script>
+<script src="/assets/captured_pieces.js"></script>
+<script src="/assets/date_helper.js"></script>
+<script src="/assets/timer.js"></script>
 
 <script>
 $(function() {
-  if ("<%= current_user.id %>" === "<%= @room.player2_id %>") {
+  // variables from embedded ruby data attributes
+  var player1 = $('.chess-holder').data('player1');
+  var player2 = $('.chess-holder').data('player2');
+  var currentUser = $('body').data('user');
+
+  // switch orientation depending on player id
+  if (currentUser === player2) {
     board.orientation('black');
   }
-  console.log("<%= current_user.id %>");
-  console.log("<%= @room.player1_id %>");
-  console.log("<%= @room.player2_id %>");
 
+  // provides functionality to expand - close chatbox
   $('.glyphicon-minus').click(function() {
     $(this).parent().parent().parent().toggle();
     $(this).parent().parent().parent().parent().find('.closed-box').toggle();
@@ -395,44 +209,12 @@ $(function() {
     $('.open-box').find('.message-content').scrollTop($('.open-box').find('.message-content').prop("scrollHeight"));
   });
 
-  var DateHelper = {
-    // Takes the format of "Jan 15, 2007 15:45:00 GMT" and converts it to a relative time
-    // Ruby strftime: %b %d, %Y %H:%M:%S GMT
-    time_ago_in_words_with_parsing: function(from) {
-      var date = new Date;
-      date.setTime(Date.parse(from));
-      return this.time_ago_in_words(date);
-    },
-    // Takes a timestamp and converts it to a relative time
-    // DateHelper.time_ago_in_words(1331079503000)
-    time_ago_in_words: function(from) {
-      return this.distance_of_time_in_words(new Date, from);
-    },
-
-    distance_of_time_in_words: function(to, from) {
-      var distance_in_seconds = ((to - from) / 1000);
-      var distance_in_minutes = Math.floor(distance_in_seconds / 60);
-      var tense = distance_in_seconds < 0 ? " from now" : " ago";
-      distance_in_minutes = Math.abs(distance_in_minutes);
-      if (distance_in_minutes == 0) { return 'less than a minute'+tense; }
-      if (distance_in_minutes == 1) { return 'a minute'+tense; }
-      if (distance_in_minutes < 45) { return distance_in_minutes + ' minutes'+tense; }
-      if (distance_in_minutes < 90) { return 'about an hour'+tense; }
-      if (distance_in_minutes < 1440) { return 'about ' + Math.floor(distance_in_minutes / 60) + ' hours'+tense; }
-      if (distance_in_minutes < 2880) { return 'a day'+tense; }
-      if (distance_in_minutes < 43200) { return Math.floor(distance_in_minutes / 1440) + ' days'+tense; }
-      if (distance_in_minutes < 86400) { return 'about a month'+tense; }
-      if (distance_in_minutes < 525960) { return Math.floor(distance_in_minutes / 43200) + ' months'+tense; }
-      if (distance_in_minutes < 1051199) { return 'about a year'+tense; }
-
-      return 'over ' + Math.floor(distance_in_minutes / 525960) + ' years';
-    }
-  };
-
+  // assign Pusher key and channel name
   var pusher = new Pusher('f74ddd7f3eae987007b6');
   var channelName = 'private-conversation.' + "<%= current_user ? current_user.id.to_s : 'null' %>";
   var channel = pusher.subscribe(channelName);
 
+  // Pusher event for new chatbox message
   channel.bind('new_message', function(data) {
 
   var timeAgo = DateHelper.time_ago_in_words_with_parsing(data.time);
@@ -443,132 +225,16 @@ $(function() {
   }
   });
 
-
+  // Pusher event for new chess move
   channel.bind('new_move', function(data) {
-    console.log(data.fen);
-    console.log;
-    console.log(data.object_notation);
-    console.log(game.turn());
 
     onDrop(data.object_notation.split('-')[0], data.object_notation.split('-')[1]);
     board.move(data.object_notation);
-
     switchTurn();
-
-    // variables for number of each piece on the board
-    var numBlackPawns = (data.fen.split(" ")[0].match(/p/g) || []).length;
-    var numWhitePawns = (data.fen.split(" ")[0].match(/P/g) || []).length;
-    var numBlackRooks = (data.fen.split(" ")[0].match(/r/g) || []).length;
-    var numWhiteRooks = (data.fen.split(" ")[0].match(/R/g) || []).length;
-    var numBlackKnights = (data.fen.split(" ")[0].match(/n/g) || []).length;
-    var numWhiteKnights = (data.fen.split(" ")[0].match(/N/g) || []).length;
-    var numBlackBishops = (data.fen.split(" ")[0].match(/b/g) || []).length;
-    var numWhiteBishops = (data.fen.split(" ")[0].match(/B/g) || []).length;
-    var numBlackQueens = (data.fen.split(" ")[0].match(/q/g) || []).length;
-    var numWhiteQueens = (data.fen.split(" ")[0].match(/Q/g) || []).length;
-
-    // display captured pieces  - bp, wP, bk, wK, bb, wB, bq, wQ, br, wR
-
-    // pawns
-    var bPawnDiff = 8 - numBlackPawns;
-    var numWindowBlackPawns = $('.black-pieces').find('img[src*=bP]').length;
-    if (bPawnDiff > numWindowBlackPawns) {
-      $('.black-pieces').append('<img src="/assets/bP.png" class="small-icons">');
-    }
-    var wPawnDiff = 8 - numWhitePawns;
-    var numWindowWhitePawns = $('.white-pieces').find('img[src*=wP]').length;
-    if (wPawnDiff > numWindowWhitePawns) {
-      $('.white-pieces').append('<img src="/assets/wP.png" class="small-icons">');
-    }
-
-    // rooks
-    var bRookDiff = 2 - numBlackRooks;
-    var numWindowBlackRooks = $('.black-pieces').find('img[src*=bR]').length;
-    if (bRookDiff > numWindowBlackRooks) {
-      $('.black-pieces').append('<img src="/assets/bR.png" class="small-icons">');
-    }
-    var wRookDiff = 2 - numWhiteRooks;
-    var numWindowWhiteRooks = $('.white-pieces').find('img[src*=wR]').length;
-    if (wRookDiff > numWindowWhiteRooks) {
-      $('.white-pieces').append('<img src="/assets/wR.png" class="small-icons">');
-    }
-
-    // knights
-    var bKnightDiff = 2 - numBlackKnights;
-    var numWindowBlackKnights = $('.black-pieces').find('img[src*=bN]').length;
-    if (bKnightDiff > numWindowBlackKnights) {
-      $('.black-pieces').append('<img src="/assets/bN.png" class="small-icons">');
-    }
-    var wKnightDiff = 2 - numWhiteKnights;
-    var numWindowWhiteKnights = $('.white-pieces').find('img[src*=wN]').length;
-    if (wKnightDiff > numWindowWhiteKnights) {
-      $('.white-pieces').append('<img src="/assets/wN.png" class="small-icons">');
-    }
-
-    // bishops
-    var bBishopDiff = 2 - numBlackBishops;
-    var numWindowBlackBishops = $('.black-pieces').find('img[src*=bB]').length;
-    if (bBishopDiff > numWindowBlackBishops) {
-      $('.black-pieces').append('<img src="/assets/bB.png" class="small-icons">');
-    }
-    var wBishopDiff = 2 - numWhiteBishops;
-    var numWindowWhiteBishops = $('.white-pieces').find('img[src*=wB]').length;
-    if (wBishopDiff > numWindowWhiteBishops) {
-      $('.white-pieces').append('<img src="/assets/wB.png" class="small-icons">');
-    }
-
-    // queens
-    var bQueenDiff = 1 - numBlackQueens;
-    var numWindowBlackQueens = $('.black-pieces').find('img[src*=bQ]').length;
-    if (bQueenDiff > numWindowBlackQueens) {
-      $('.black-pieces').append('<img src="/assets/bQ.png" class="small-icons">');
-    }
-    var wQueenDiff = 1 - numWhiteQueens;
-    var numWindowWhiteQueens = $('.white-pieces').find('img[src*=wQ]').length;
-    if (wQueenDiff > numWindowWhiteQueens) {
-      $('.white-pieces').append('<img src="/assets/wQ.png" class="small-icons">');
-    }
+    setCapturedPieces(data);
   });
 
   // set timer
-  var addedTimePerMove, formatTime, initialTime, intervalId, pad, remainingTime, switchTurn, turn, update;
-  initialTime = 15 * 60;
-  addedTimePerMove = 0;
-  turn = 1;
-  remainingTime = [initialTime, initialTime];
-  pad = function(x) {
-   return ('0' + x).slice(-2);
-  };
-  formatTime = function(t) {
-   var hours, minutes, seconds;
-   seconds = t % 60;
-   minutes = Math.floor(t / 60) % 60;
-   hours = Math.floor(t / 3600);
-   if (hours) {
-     return "" + hours + ":" + (pad(minutes)) + ":" + (pad(seconds));
-   } else {
-     return "" + minutes + ":" + (pad(seconds));
-   }
-  };
-  update = function() {
-   var i;
-   remainingTime[turn]--;
-   for (i = 0; i < 2; i++) {
-     $("#time" + i).text(formatTime(remainingTime[i]));
-   }
-   if (remainingTime[turn] <= 0) {
-     $("#time" + turn).removeClass('turn').addClass('loser');
-     alert('Game Over');
-     return clearInterval(intervalId);
-   }
-  };
-  switchTurn = function() {
-     $("#time" + turn).removeClass('turn');
-     turn = 1 - turn;
-     $("#time" + turn).addClass('turn');
-     return remainingTime[turn] += addedTimePerMove;
-  };
-
   $('#time1').addClass('turn');
   return intervalId = setInterval(update, 1000);
 });

@@ -1,0 +1,227 @@
+// Place all the styles related to the Rooms controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+// chat message container
+.popup-chatbox {
+  height: 45px;
+  position: fixed;
+  bottom: 0px;
+  background: radial-gradient(#558372, #548271);
+  width: 285px;
+  right: 15px;
+  box-shadow: 5px -5px 2px #ccc;
+  p {
+    color: white;
+    float: left;
+    clear: both;
+    margin-top: 10px;
+    letter-spacing: .2px;
+    margin-left: 10px;
+  }
+}
+// expanded chat box
+.popup-expanded {
+  height: 285px;
+  position: fixed;
+  bottom: 0px;
+  background-color: white;
+  width: 285px;
+  right: 15px;
+  border: 1px solid #AAA;
+  box-shadow: 10px 10px 5px #AAA;
+
+}
+// chat box header
+.popup-expanded .popup-head {
+  background: radial-gradient(#558372, #548271);
+  color: white;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 14px;
+  height: 45px;
+  p {
+    color: white;
+    float: left;
+    clear: both;
+    margin-top: 6px;
+    letter-spacing: 1.2px;
+    margin-left: 0px;
+    font-weight: 700;
+  }
+  .glyphicon-minus {
+    margin: 0;
+    margin-top: -1px;
+    float: right;
+    font-size: 21px;
+    background: radial-gradient(#558372, #548271);
+    color: #fff;
+    border: 0;
+  }
+}
+
+.glyphicon-plus.glyphicon.button-glyphs {
+  margin: 0;
+  margin-top: -1px;
+  float: right;
+  font-size: 21px;
+  border: 0;
+  background: transparent;
+}
+.popup-expanded .popup-head .popup-head-right {
+  float: right;
+}
+.popup-expanded .popup-head .popup-head-left {
+  float: left;
+}
+.popup-expanded .popup-head .popup-head-right a {
+  text-decoration: none;
+  color: white;
+}
+
+// chat box content
+.popup-expanded .popup-messages {
+  height: 100%;
+  background: white;
+  color: black;
+}
+
+.text-field {
+  width: 280px;
+  height: 35px;
+  margin: 0;
+  margin-left: 4px;
+  bottom: 0px;
+}
+
+.send {
+  display: none;
+}
+.message-content {
+  height: 200px;
+  background: #eee;
+  width: flex;
+  overflow-y: scroll;
+  h6 {
+    text-align: center;
+    color: #b4b4b4;
+  }
+}
+
+.message-text {
+  background: white;
+  border-radius: 8px;
+  min-height: 20px;
+  margin-left: 0;
+  margin-right: 0;
+  display: inline-block;
+  min-width: 60px;
+  max-width: 168px;
+ }
+
+ // message container for recipient message
+.left {
+  float: left;
+  width: 100%;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  img {
+    width: 35px;
+    float: left;
+    display: inline-block;
+  }
+  p {
+    display: inline-block;
+    margin-left: 13px;
+    text-align: center;
+    font-weight: 300;
+    padding: 5px;
+    letter-spacing: .2px;
+  }
+}
+
+// message container for sender message
+.right {
+  width: 100%;
+  float: right;
+  text-align: right;
+  margin-right: 10px;
+  position: relative;
+  overflow: hidden;
+  img {
+    width: 35px;
+    float: right;
+    display: inline-block;
+  }
+   p {
+     display: inline-block;
+     margin-right: 13px;
+     text-align: center;
+     font-weight: 300;
+     padding: 5px;
+     letter-spacing: .2px;
+   }
+
+ }
+
+.message-wrapper {
+  min-height: 50px;
+   margin-left: 10px;
+   margin-bottom: 8px;
+   border-radius: 4px;
+   display: flex;
+   clear: both;
+}
+
+// create side triangles on message bubble
+.right p:after {
+  content: "";
+  height: 0;
+  margin-top: 10px;
+  width: 0;
+  right: 0;
+  top: 0;
+  margin-right: 40px;
+  position: absolute;
+  border-left: 9px solid white;
+  border-top: 6px solid transparent;
+  border-left: 9px solid white;
+  border-bottom: 6px solid transparent;
+}
+
+// side triangles on message bubble
+.left p:after {
+   content: "";
+   height: 0;
+   width: 0;
+   margin-top: 10px;
+   left: 0;
+   top: 0;
+   margin-left: 40px;
+   position: absolute;
+   border-right: 12px solid white;
+   border-top: 8px solid transparent;
+   border-bottom: 8px solid transparent;
+ }
+
+.form-control {
+  width: 300px;
+}
+ // end of chatbox css //
+
+// pulsing animation for chatbox header
+.pulsit {
+  animation: pulse linear 2s infinite;
+  -webkit-animation: pulse linear 2s infinite;
+}
+@-webkit-keyframes pulse {
+  0% { background: #78baa1;}
+  50% { background: #548271;}
+  100% { background: #78baa1;}
+}
+
+.small-icons {
+  width: 35px;
+}

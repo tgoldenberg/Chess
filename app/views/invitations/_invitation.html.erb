@@ -1,16 +1,18 @@
+<!-- Alert invitation sender that their invitation was sent -->
 <div class="modal-header" style="text-align: center;">
   <h2 style="font-size: 35px;">your request was sent <img src="/assets/logo.png" style="width:50px;"></h2>
 
   <div class="well" style="border-radius: 12px;">
     <p style="font-size: 16px;">As soon as your invitation recipient accepts, we will direct you to the chess game!</p>
   </div>
-
   <th><%= link_to 'okay', '#', class: 'btn btn-success btn-lg cancel' %></th>
-  <br />
-  <br /><br /><br /><br /><br />
+
+  <!-- extra space at bottom of modal -->
+  <br /><br /><br /><br /><br /><br />
 </div>
 
 <script>
+// close modal if user click 'cancel'
 $('.cancel').click(function(){
   $('#product-modal').modal("hide");
   return false;

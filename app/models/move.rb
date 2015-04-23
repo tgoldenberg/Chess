@@ -6,4 +6,5 @@ class Move < ActiveRecord::Base
 
   belongs_to :room
   belongs_to :user
+  has_one :board
 end

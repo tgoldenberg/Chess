@@ -1,31 +1,187 @@
-// Place all the styles related to the Rooms controller here.
+// Place all the styles related to the Moves controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.col-md-9 {
-  .chess-holder {
-    .video-box-parent .video-box {
-      #otherVideos {
 
-      }
-      .button-container {
-        .video-buttons {
-          span.glyphicon .glyphicon-facetime-video .video-chat-buttons .button-glyphs {
-          }
-        }
-        .video-buttons {
-          span.glyphicon .glyphicon-volume-up .video-chat-buttons .buttons-glyphs {
 
-          }
-        }  
+// notation sidebar
+.col-md-3 {
+  padding-top: 15px;
+}
+
+.sidebar-nav {
+  float: right;
+  background: #e4e4e4;
+
+  .table-holder {
+    margin: 20px 0px 0 0;
+    height: 470px;
+    background: white;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-right: 1px #c4c4c4;
+  }
+  .text-holder {
+    height: 100%;
+    width: 270px;
+    // styles for notation fonts
+    .pipe {
+      display: inline;
+      color: #e4e4e4;
+      font-weight: 200;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    tr {
+      display: inline-table;  height: 40px;
+      width: 270px;
+      border-bottom: 1px solid #e4e4e4;
+      th {
+        font-family:  "OpenSansLight","Helvetica Neue",Arial,sans-serif;
+        font-size: 18px;
+        line-height: normal;
+        font-weight: normal;
+        color: #777;
       }
     }
+    b {
+      font-family: "OpenSansRegular","Helvetica Neue",Arial,sans-serif;
+      font-size: 20px;
+      color: #78baa1;
+      line-height: normal;
+    }
+  }
+}
+// button container for notation sidebar
+.buttons {
+  height: 50px;
+  background: #e4e4e4;
+  box-shadow: -2px 2px #c4c4c4;
+  text-align: center;
+  clear: both;
+  padding-top: 7px;
+}
+
+// captured pieces sidebar
+.captured-pieces {
+  height: 538px;
+  background: white;
+  margin-left: 50px;
+
+  .button-holder {
+    background:  #78baa1;
+    width: 140px;
+    height: 40.2px;
+    border: 0;
+  }
+  p {
+    text-align: center;
+    display: block;
+    letter-spacing: 1.3px;
+    color: white;
+    font-size: 12px;
+    padding-top: 10px;
+    font-weight: 400;
+    margin: auto;
+  }
+  .space-bottom {
+    height: 10px;
+    background: #e4e4e4;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+  .black-pieces {
+    height: 50%;
+  }
+  .white-pieces {
+    height: 50%;
   }
 }
 
 
+// banner displaying game winner
+.game-over.animated.bounceIn {
+  width: 500px;
+  height: 150px;
+  background: radial-gradient(#558372, #78baa1);
+  color: white;
+  z-index: 100;
+  opacity: 0.9;
+  top: 10px;
+  border-radius: 4px;
+  position: absolute;
+  text-align: center;
+  margin-left: 350px;
+  h1 {}
+  p {}
+}
+
+// extra space at the bottom of the game page
+.bottom-row {
+  height: 100px;
+  clear: both;
+  background: #e4e4e4;
+}
 
 
+// glyphicons that are buttons
+.button-glyphs {
+  font-size: 22px;
+  color: white;
+  background: #548271;
+  margin-top: -8px;
+  margin-left: -16px;
+  float: left;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
 
-.small-icons {
-  width: 35px;
+// basic button styling
+button {
+  clear: both;
+  height: 35px;
+  width: 125px;
+  background: #78baa1;
+  border-radius: 0px;
+
+  li {
+    list-style-type: none;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin: auto;
+    color: #bbb;
+    font-weight: bold;
+    text-align: center;
+    font-family:"OpenSansRegular","Helvetica Neue",Arial,sans-serif;
+  }
+}
+
+// styling for user info box
+.user-header {
+  background: #9B9981;
+  height: 35px;
+  color: white;
+  p {
+    font-weight: 300;
+  }
+}
+
+.space-keeper {
+  height: 180px;
+  background: #e4e4e4;
+  margin-top: 10px;
+  margin-left: -15px;
+  margin-right: -15px;
+  .line-break {
+    display: block;
+    height: .1px;
+  }
+  .player-info {
+    background: white;
+    height: 140px;
+    p {
+      font-weight: 300;
+      letter-spacing: .5px;
+    }
+  }
 }

@@ -4,4 +4,6 @@ if (game.in_checkmate() === true || game.in_draw() === true) {
   videoConference();
 }
 
-$('.text-list').find('tr').last().append('<th> <%= link_to 'Rearrange Board', "#", class: 'btn btn-success btn-sm'  %></th>')
+if ($('.text-list').find('tr').last().children().length < 2) {
+  $('.text-list').find('tr').last().append('<th> <%= link_to 'Rearrange Board', new_board_path(:move_id => @move.id, :fen => @move.piece), remote: true, class: "btn btn-success btn-sm"  %></th>')
+}

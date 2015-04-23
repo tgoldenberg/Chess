@@ -1,14 +1,14 @@
 <div class="well container">
   <h1>Home</h1>
-  <li> <%= link_to 'Sign Up', modal_register_path, remote: true, :id => 'modal_register' %></li>
+  <li> <%= link_to 'Sign Up','#', :id => 'modal_register', :class => 'btn btn-lg btn-primary' %></li>
 </div>
-  <% if user_signed_in? %>
-    <% @users.each do |user|  %>
+
+<% if user_signed_in? %>
+  <% @users.each do |user|  %>
     <h3> <%= user.name %></h3>
     <li> <%= link_to 'Request Game', new_invitation_path(sender_id: current_user.id, recipient_id: user.id), remote: true, class: 'btn btn-success' %></li>
   <% end %>
 <% end %>
-
 
 <div id="product-modal" class="modal fade">
   <div class="modal-dialog">
